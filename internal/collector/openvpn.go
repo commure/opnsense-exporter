@@ -11,6 +11,8 @@ type openVPNCollector struct {
 	log       *slog.Logger
 	instances *prometheus.Desc
 	sessions  *prometheus.Desc
+	bytesReceived *prometheus.Desc
+	bytesSent *prometheus.Desc
 
 	subsystem string
 	instance  string
@@ -38,6 +40,14 @@ func (c *openVPNCollector) Register(namespace, instanceLabel string, log *slog.L
 	)
 	c.sessions = buildPrometheusDesc(c.subsystem, "sessions",
 		"OpenVPN session (1 = ok, 0 = not ok)",
+		[]string{"description", "virtual_address", "username"},
+	)
+	c.bytesReceived = buildPrometheusDesc(c.subsystem, "bytes_received_total",
+		"Bytes received by this OpenVPN session",
+		[]string{"description", "virtual_address", "username"},
+	)
+	c.bytesSent = buildPrometheusDesc(c.subsystem, "bytes_sent_total",
+		"Bytes sent by this OpenVPN session",
 		[]string{"description", "virtual_address", "username"},
 	)
 }

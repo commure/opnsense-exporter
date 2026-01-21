@@ -23,6 +23,10 @@ type openVPNSearchSessionsResponse struct {
 		Username       string `json:"username"`
 		VirtualAddress string `json:"virtual_address"`
 		Status         string `json:"status"`
+		Timestamp      int    `json:"timestamp"`
+		BytestReceived string `json:"bytes_received"`
+		BytesSent      string `json:"bytes_sent"`
+		ConnectedSince string `json:"connected_since"`
 	} `json:"rows"`
 	RowCount int `json:"rowCount"`
 	Total    int `json:"total"`
@@ -45,6 +49,10 @@ type Sessions struct {
 	Username       string
 	VirtualAddress string
 	Status         int
+	Timestamp      int
+	BytestReceived string
+	BytesSent      string
+	ConnectedSince string
 }
 type OpenVPNSessions struct {
 	Rows []Sessions
@@ -107,6 +115,10 @@ func (c *Client) FetchOpenVPNSessions() (OpenVPNSessions, *APICallError) {
 			Username:       v.Username,
 			VirtualAddress: v.VirtualAddress,
 			Status:         parseOpenVPNsessionStatusToInt(v.Status),
+			Timestamp:      v.Timestamp,
+			BytestReceived: v.BytestReceived,
+			BytesSent:      v.BytesSent,
+			ConnectedSince: v.ConnectedSince,
 		})
 	}
 
